@@ -1,0 +1,92 @@
+/*style.css
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900');
+
+.clear {
+  clear: both;
+}
+
+#container {
+  margin: 0 auto;
+  width: 960px;
+  text-align: center;
+  font-family: 'Work Sans';
+}
+
+header p {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+header p u {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.scoreboard {
+  width: 400px;
+  margin: 0 auto;
+  border: 1px black solid;
+}
+
+.scoreboard-title {
+  font-size: 18px;
+  line-height: 36px;
+  font-weight: 500;
+  border-bottom: 1px black solid;
+  margin-bottom: 10px;
+}
+
+.scoreboard-score p {
+  width: 150px;
+  display: inline-block;
+}
+
+
+#myScore {
+  font-size: 40px;
+  width: 150px;
+  display: inline-block; 
+  line-height: 56px;
+}
+
+#botScore {
+  font-size: 40px;
+  width: 150px;
+  display: inline-block; 
+  line-height: 56px;
+}
+
+button {
+  width: 150px;
+  height: 30px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  background-color: white;
+  border: 1px black solid;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+#myChoice {
+  font-weight: 700;
+}
+
+#botChoice {
+  font-weight: 700;
+}
+
+#result
+{
+  font-size: 18px;
+  font-weight: 800;
+}
