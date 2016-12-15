@@ -96,4 +96,3 @@ myScissors.addEventListener ('click' , function (e) {
   myChoice = 3;
   runBotChoice ();
 });
-
