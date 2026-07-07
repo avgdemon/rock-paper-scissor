@@ -1,246 +1,272 @@
-/*style.css
-*/
+/* style.css */
 
-@import url('https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900');
-
-body {
-  background-color: #e74c3c;
-  /*zoom: 150%;*/
-  color: white;
+:root {
+  --bg-1: #1b1035;
+  --bg-2: #3b1d5e;
+  --accent: #ff5964;
+  --accent-2: #ffb347;
+  --win: #3ddc97;
+  --lose: #ff5964;
+  --draw: #ffb347;
+  --card: rgba(255, 255, 255, 0.07);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --text: #f4f1fa;
+  --text-dim: rgba(244, 241, 250, 0.65);
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-.clear {
-  clear: both;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font);
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(255, 89, 100, 0.25), transparent 60%),
+              radial-gradient(1000px 500px at 90% 110%, rgba(255, 179, 71, 0.18), transparent 60%),
+              linear-gradient(160deg, var(--bg-1), var(--bg-2));
+  background-attachment: fixed;
 }
 
 #container {
+  max-width: 720px;
   margin: 0 auto;
-  width: 960px;
+  padding: 48px 20px 64px;
   text-align: center;
-  font-family: 'Work Sans';
 }
 
-header p {
-  margin-top: 24px;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 22px;
-}
-
-header p u {
-  font-weight: 600;
-}
+/* ---------- header ---------- */
 
 header {
-  margin-bottom: 64px;
-  margin-top: 24px;
+  margin-bottom: 44px;
 }
 
 h1 {
-  font-size: 42px;
-  font-weight: 700;
+  font-size: clamp(30px, 6vw, 46px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0 0 16px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent);
 }
 
-.scoreboard {
-  width: 680px;
-  height: 270px;
-  margin: 0 auto;
-  /*border: 1px white solid;*/
-  display: inline-block;
-  margin-bottom: 64px;
+h1 .dot {
+  -webkit-text-fill-color: var(--text-dim);
 }
 
-.scoreboard-title {
-  font-size: 18px;
-  line-height: 36px;
-  font-weight: 500;
-  border-bottom: 1px white solid;
-  margin-bottom: 10px;
-}
-
-.block-1{
-  text-align: center;
-  background-color: rgba(0,0,0,.1);
-  float: left;
-  width:330px; 
-}
-
-.block-2 {
-  text-align: center;
-  background-color: rgba(0,0,0,.1);
-  float: right;
-  width:330px; 
-}
-
-.scoreboard-score p {
-  display: block;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 70px;
+.tagline {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-dim);
   margin: 0;
 }
 
-
-#myScore {
-  font-size: 100px;
+.tagline u {
+  color: var(--text);
   font-weight: 600;
-  display: block; 
-  line-height: 200px;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
 }
 
-#botScore {
-  font-size: 100px;
-  font-weight: 600;
-  display: block; 
-  line-height: 200px;
-}
+/* ---------- scoreboard ---------- */
 
-button {
-  color: white;
-  text-transform: uppercase;
-  width: 200px;
-  height: 50px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 20px;
-  background-color: #e74c3c;
-  border: 1px white solid;
-  margin-top: 20px;
-  margin-right: 20px;
-}
-
-button:hover {
-  background-color: #E34946;
-  border-bottom: 3px white solid;
-}
-
-
-h4 {
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 24px;
+.scoreboard {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 18px;
   margin-bottom: 40px;
 }
 
-#myChoice {
-  font-weight: 500;
+.score-card {
+  flex: 1;
+  max-width: 240px;
+  padding: 26px 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
-#botChoice {
-  font-weight: 500;
+.score-card.player {
+  border-top: 3px solid var(--win);
 }
 
-#result
-{
-  font-size: 24px;
+.score-card.bot {
+  border-top: 3px solid var(--accent);
+}
+
+.score {
+  font-size: clamp(56px, 12vw, 84px);
   font-weight: 800;
-  line-height: 40px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
+
+.score.bump {
+  animation: bump 0.45s ease;
+}
+
+@keyframes bump {
+  30% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.score-label {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.vs {
+  align-self: center;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+/* ---------- arena ---------- */
+
+.arena {
+  margin-bottom: 40px;
+}
+
+#result {
+  min-height: 44px;
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+#result.pop {
+  animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#result.win  { color: var(--win); }
+#result.lose { color: var(--lose); }
+#result.draw { color: var(--draw); }
+
+.round-summary {
+  margin: 10px 0 0;
+  font-size: 15px;
+  color: var(--text-dim);
+}
+
+.choice {
+  display: inline-block;
+  min-width: 34px;
+  font-size: 22px;
+  vertical-align: middle;
+}
+
+/* ---------- controls ---------- */
 
 h2 {
-  font-size: 14px;
-  line-height: 28px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin: 0 0 18px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 132px;
+  padding: 18px 0 14px;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+button .emoji {
+  font-size: 40px;
+  line-height: 1;
+}
+
+button .label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+button:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  background: rgba(255, 89, 100, 0.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+}
+
+button:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
 }
 
 footer {
-  width: 100%;
-  height: 36px;
+  height: 24px;
 }
 
+/* ---------- small screens ---------- */
 
-@media only screen and (max-width: 360px) {
-    body {
-        zoom:90%;
-    }
+@media only screen and (max-width: 480px) {
+  #container {
+    padding-top: 32px;
+  }
 
-    #container {
-      width:90%;
-      padding-left: 15px;
-      padding-right: 15px;
-      box-sizing: border-box;
-    }
+  .scoreboard {
+    gap: 10px;
+  }
 
-    .scoreboard {
-      width: 100%;
-      margin-bottom: 24px;
-      height: 170px;
-    }
+  .vs {
+    display: none;
+  }
 
-    .block-1{
-      width:45%;
-    }
+  .buttons {
+    gap: 10px;
+  }
 
-    .block-2 {
-      width:45%;
-    }
-
-    button {
-      width: 70%;
-      margin-top: 20px;
-    }
-
-    .scoreboard-score p {
-      line-height: 50px;
-    }
-
-
-    #myScore {
-      line-height: 120px;
-    }
-
-    #botScore {
-      line-height: 120px;
-    }
-
-    header {
-      margin-bottom: 24px;
-    }
-}
-
-@media only screen and (min-width: 361px) and (max-width: 960px) {
-    #container {
-        width: 90%;
-        margin: 0 auto;
-        box-sizing: border-box;
-    }
-
-    button {
-      width: 150px;
-      margin-top: 20px;
-    }
-
-    .scoreboard {
-      width: 80%;
-      height: 200px;
-    }
-
-    .block-1{
-      width:45%;
-    }
-
-    .block-2 {
-      width:45%;
-    }
-
-    button {
-      width: 70%;
-      margin-top: 20px;
-    }
-
-    .scoreboard-score p {
-      line-height: 50px;
-    }
-
-
-    #myScore {
-      line-height: 150px;
-    }
-
-    #botScore {
-      line-height: 150px;
-    }
-
-    header {
-      margin-bottom: 24px;
-    }
+  button {
+    width: calc(33.333% - 8px);
+    min-width: 96px;
+  }
 }

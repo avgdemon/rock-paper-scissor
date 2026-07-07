@@ -1,98 +1,59 @@
-
 var myScore = 0;
-var botScore = 0; 
+var botScore = 0;
 
-// var myScore = document.getElementById('myScore');
-// var botScore = document.getElementById('botScore');
-
-var myRock = document.getElementById('rock');
-var myPaper = document.getElementById('paper');
-var myScissors = document.getElementById('scissors');
-
-var result = document.getElementById('result');
-
+var myScoreEl = document.getElementById('myScore');
+var botScoreEl = document.getElementById('botScore');
+var resultEl = document.getElementById('result');
 var displayMyChoice = document.getElementById('myChoice');
 var displayBotChoice = document.getElementById('botChoice');
 
+var HANDS = {
+  1: { name: 'rock', emoji: '✊' },
+  2: { name: 'paper', emoji: '✋' },
+  3: { name: 'scissors', emoji: '✌️' }
+};
 
-var getRandomInt = function(min, max) {
+// beats[x] is the hand that x defeats
+var beats = { 1: 3, 2: 1, 3: 2 };
+
+var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+var replayAnimation = function (el, className) {
+  el.classList.remove(className);
+  void el.offsetWidth; // restart the CSS animation
+  el.classList.add(className);
+};
 
-var checkWinner = function () {
-  console.log(myScore);
-  console.log(botScore);
-  if (myChoice===1 && botChoice===1) {
-    result.innerHTML = "It's a Draw";
-    displayMyChoice.innerHTML = "rock";
-    displayBotChoice.innerHTML = "rock";
-  } else if (myChoice===1 && botChoice===2) {
-    result.innerHTML = "You Lose :(";
-    displayMyChoice.innerHTML = "rock";
-    displayBotChoice.innerHTML = "paper";
-    botScore++;
-    document.getElementById('botScore').innerHTML= botScore;
-  } else if (myChoice===1 && botChoice===3) {
-    result.innerHTML = "You Won :)";
-    displayMyChoice.innerHTML = "rock";
-    displayBotChoice.innerHTML = "scissors";
+var showResult = function (text, outcome) {
+  resultEl.textContent = text;
+  resultEl.classList.remove('win', 'lose', 'draw');
+  resultEl.classList.add(outcome);
+  replayAnimation(resultEl, 'pop');
+};
+
+var playRound = function (myChoice) {
+  var botChoice = getRandomInt(1, 3);
+
+  displayMyChoice.textContent = HANDS[myChoice].emoji + ' ' + HANDS[myChoice].name;
+  displayBotChoice.textContent = HANDS[botChoice].emoji + ' ' + HANDS[botChoice].name;
+
+  if (myChoice === botChoice) {
+    showResult("It's a draw", 'draw');
+  } else if (beats[myChoice] === botChoice) {
+    showResult('You won! 🎉', 'win');
     myScore++;
-    document.getElementById('myScore').innerHTML = myScore;
-  } else if (myChoice===2 && botChoice===2) {
-    result.innerHTML = "It's a Draw";
-    displayMyChoice.innerHTML = "paper";
-    displayBotChoice.innerHTML = "paper";
-  } else if (myChoice===2 && botChoice===1) {
-    result.innerHTML = "You Won :)";
-    displayMyChoice.innerHTML = "paper";
-    displayBotChoice.innerHTML = "rock";
-    myScore++;
-    document.getElementById('myScore').innerHTML = myScore;
-  } else if (myChoice===2 && botChoice===3) {
-    result.innerHTML = "You Lose :(";
-    displayMyChoice.innerHTML = "paper";
-    displayBotChoice.innerHTML = "scissors";
-    botScore++;
-    document.getElementById('botScore').innerHTML = botScore;
-  } else if (myChoice===3 && botChoice===3) {
-    result.innerHTML = "It's a Draw";
-    displayMyChoice.innerHTML = "scissors";
-    displayBotChoice.innerHTML = "scissors";
-  } else if (myChoice===3 && botChoice===1) {
-    result.innerHTML = "You Lose :(";
-    displayMyChoice.innerHTML = "scissors";
-    displayBotChoice.innerHTML = "rock";
-    botScore++;
-    document.getElementById('botScore').innerHTML = botScore;
+    myScoreEl.textContent = myScore;
+    replayAnimation(myScoreEl, 'bump');
   } else {
-    result.innerHTML = "You Won :)";
-    displayMyChoice.innerHTML = "scissors";
-    displayBotChoice.innerHTML = "paper";
-    myScore++;
-    document.getElementById('myScore').innerHTML = myScore;
+    showResult('You lose 🤖', 'lose');
+    botScore++;
+    botScoreEl.textContent = botScore;
+    replayAnimation(botScoreEl, 'bump');
   }
 };
 
-
-var runBotChoice = function() {
-  botChoice = getRandomInt(1, 3);
-  checkWinner();
-};
-
-// User Input
-
-myRock.addEventListener ('click' , function (e) {
-  myChoice = 1;
-  runBotChoice();
-});
-
-myPaper.addEventListener ('click' , function (e) {
-  myChoice = 2;
-  runBotChoice ();
-});
-
-myScissors.addEventListener ('click' , function (e) {
-  myChoice = 3;
-  runBotChoice ();
-});
+document.getElementById('rock').addEventListener('click', function () { playRound(1); });
+document.getElementById('paper').addEventListener('click', function () { playRound(2); });
+document.getElementById('scissors').addEventListener('click', function () { playRound(3); });

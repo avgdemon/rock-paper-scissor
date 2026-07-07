@@ -1,44 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Rock-Paper-Scissors</title>
+  <meta charset="utf-8">
+  <title>Rock · Paper · Scissors</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" href="reset.css"> -->
   <link rel="stylesheet" type="text/css" href="reset.css">
   <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <body>
-  <section id="container">
+  <main id="container">
     <header>
-    <h1>Rock - Paper - Scissors</h1>
-    <p> A steam powered bot has challenged you to a game. <u>Rocks</u> beat <u>Scissors</u>, <u>Scissors</u> beats <u>Paper</u>, <u>Paper</u> beats <u>Rock</u>.</p>
+      <h1>Rock <span class="dot">·</span> Paper <span class="dot">·</span> Scissors</h1>
+      <p class="tagline">A steam-powered bot has challenged you to a duel.<br>
+        <u>Rock</u> beats <u>Scissors</u> · <u>Scissors</u> beats <u>Paper</u> · <u>Paper</u> beats <u>Rock</u>.</p>
     </header>
-    <div class="scoreboard">
-      <!-- <div class="scoreboard-title"> Scoreboard </div> -->
-      <div class="scoreboard-score">
-        <div class="block-1">
-          <div id="myScore">0</div>
-          <p>YOU</p>
-        </div>
-        <div class="block-2">
-          <div id="botScore">0</div>
-          <p>BOT</p>
-        </div>
 
+    <section class="scoreboard" aria-label="Scoreboard">
+      <div class="score-card player">
+        <div class="score" id="myScore">0</div>
+        <p class="score-label">You</p>
       </div>
-      <div class="clear"></div>
-    </div>
-    <section>
-      <div id="result"></div>
-      <h4>You played <u><a id="myChoice">___</a></u>. The bot played <u><a id="botChoice">___</a></u>.</h4>
-      <div class="clear"></div>
-      <h2>CHOOSE WISELY!</h2>
-      <button id="rock">Rock</button>
-      <button id="paper">Paper</button>
-      <button id="scissors">Scissors</button>
-      <div class="clear">
+      <div class="vs">VS</div>
+      <div class="score-card bot">
+        <div class="score" id="botScore">0</div>
+        <p class="score-label">Bot</p>
+      </div>
     </section>
+
+    <section class="arena" aria-live="polite">
+      <div id="result">&nbsp;</div>
+      <p class="round-summary">You played <span class="choice" id="myChoice">—</span>
+        &nbsp;vs&nbsp; <span class="choice" id="botChoice">—</span> from the bot.</p>
+    </section>
+
+    <section class="controls">
+      <h2>Choose wisely</h2>
+      <div class="buttons">
+        <button id="rock" aria-label="Play rock">
+          <span class="emoji">✊</span><span class="label">Rock</span>
+        </button>
+        <button id="paper" aria-label="Play paper">
+          <span class="emoji">✋</span><span class="label">Paper</span>
+        </button>
+        <button id="scissors" aria-label="Play scissors">
+          <span class="emoji">✌️</span><span class="label">Scissors</span>
+        </button>
+      </div>
+    </section>
+
     <footer></footer>
-    <script type="text/javascript" src="script.js"></script>
-  </section>
+  </main>
+  <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
