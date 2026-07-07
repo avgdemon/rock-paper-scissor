@@ -2,54 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Rock · Paper · Scissors</title>
+  <title>RPS Arena</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
   <link rel="stylesheet" type="text/css" href="reset.css">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <main id="container">
-    <header>
-      <h1>Rock <span class="dot">·</span> Paper <span class="dot">·</span> Scissors</h1>
-      <p class="tagline">A steam-powered bot has challenged you to a duel.<br>
-        <u>Rock</u> beats <u>Scissors</u> · <u>Scissors</u> beats <u>Paper</u> · <u>Paper</u> beats <u>Rock</u>.</p>
+  <div class="aurora" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="app">
+    <header class="top">
+      <p class="kicker">The classic, remastered</p>
+      <h1>RPS&nbsp;<span class="outline">ARENA</span></h1>
     </header>
 
-    <section class="scoreboard" aria-label="Scoreboard">
-      <div class="score-card player">
-        <div class="score" id="myScore">0</div>
-        <p class="score-label">You</p>
-      </div>
-      <div class="vs">VS</div>
-      <div class="score-card bot">
-        <div class="score" id="botScore">0</div>
-        <p class="score-label">Bot</p>
-      </div>
-    </section>
-
     <section class="arena" aria-live="polite">
-      <div id="result">&nbsp;</div>
-      <p class="round-summary">You played <span class="choice" id="myChoice">—</span>
-        &nbsp;vs&nbsp; <span class="choice" id="botChoice">—</span> from the bot.</p>
+      <div class="fighter you">
+        <div class="hand" id="myHand">✊</div>
+        <div class="tag">
+          <span class="tag-name">You</span>
+          <span class="tag-score" id="myScore">0</span>
+        </div>
+      </div>
+
+      <div class="center">
+        <div class="result-badge" id="result">Ready?</div>
+        <div class="streak" id="streak">&nbsp;</div>
+      </div>
+
+      <div class="fighter bot">
+        <div class="hand" id="botHand">✊</div>
+        <div class="tag">
+          <span class="tag-name">Bot</span>
+          <span class="tag-score" id="botScore">0</span>
+        </div>
+      </div>
     </section>
 
-    <section class="controls">
-      <h2>Choose wisely</h2>
-      <div class="buttons">
+    <div class="history" id="history" aria-label="Round history"></div>
+
+    <section class="dock-wrap">
+      <div class="dock">
         <button id="rock" aria-label="Play rock">
-          <span class="emoji">✊</span><span class="label">Rock</span>
+          <span class="emoji">✊</span>
+          <span class="label">Rock</span>
+          <kbd>1</kbd>
         </button>
         <button id="paper" aria-label="Play paper">
-          <span class="emoji">✋</span><span class="label">Paper</span>
+          <span class="emoji">✋</span>
+          <span class="label">Paper</span>
+          <kbd>2</kbd>
         </button>
         <button id="scissors" aria-label="Play scissors">
-          <span class="emoji">✌️</span><span class="label">Scissors</span>
+          <span class="emoji">✌️</span>
+          <span class="label">Scissors</span>
+          <kbd>3</kbd>
         </button>
       </div>
+      <p class="hint">Click a hand — or press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></p>
     </section>
-
-    <footer></footer>
   </main>
+
   <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
