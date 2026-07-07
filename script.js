@@ -5,7 +5,10 @@ var els = {
   botHand: document.getElementById('botHand'),
   result: document.getElementById('result'),
   streak: document.getElementById('streak'),
-  history: document.getElementById('history')
+  winRate: document.getElementById('winRate'),
+  roundCount: document.getElementById('roundCount'),
+  history: document.getElementById('history'),
+  chartEmpty: document.getElementById('chartEmpty')
 };
 
 var buttons = {
@@ -23,7 +26,17 @@ var HANDS = {
 // beats[x] is the hand that x defeats
 var beats = { 1: 3, 2: 1, 3: 2 };
 
-var state = { you: 0, bot: 0, streak: 0, locked: false };
+var MAX_COLS = 24;
+var MAX_RUN_DOTS = 5;
+
+var state = {
+  wins: 0,
+  losses: 0,
+  draws: 0,
+  streak: 0,
+  outcomes: [], // 'win' | 'lose' | 'draw', oldest first
+  locked: false
+};
 
 var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var SHAKE_MS = reducedMotion ? 0 : 360;
@@ -42,13 +55,37 @@ var setButtonsDisabled = function (disabled) {
   for (var key in buttons) buttons[key].disabled = disabled;
 };
 
-var addHistoryDot = function (outcome) {
-  var dot = document.createElement('span');
-  dot.className = 'round-dot ' + outcome;
-  els.history.appendChild(dot);
-  while (els.history.children.length > 12) {
-    els.history.removeChild(els.history.firstChild);
+// column height = length of the current run of identical outcomes (capped),
+// so streaks literally grow on the chart
+var runLengthAt = function (index) {
+  var run = 1;
+  while (index - run >= 0 && state.outcomes[index - run] === state.outcomes[index]) run++;
+  return Math.min(run, MAX_RUN_DOTS);
+};
+
+var renderChart = function () {
+  els.chartEmpty.style.display = 'none';
+
+  var start = Math.max(0, state.outcomes.length - MAX_COLS);
+  var frag = document.createDocumentFragment();
+  for (var i = start; i < state.outcomes.length; i++) {
+    var outcome = state.outcomes[i];
+    var col = document.createElement('div');
+    col.className = 'col';
+    col.title = 'Round ' + (i + 1) + ' — ' + outcome;
+    var dots = runLengthAt(i);
+    for (var d = 0; d < dots; d++) {
+      var cell = document.createElement('span');
+      cell.className = 'cell ' + outcome;
+      col.appendChild(cell);
+    }
+    frag.appendChild(col);
   }
+
+  while (els.history.lastChild && els.history.lastChild !== els.chartEmpty) {
+    els.history.removeChild(els.history.lastChild);
+  }
+  els.history.appendChild(frag);
 };
 
 var showResult = function (text, outcome) {
@@ -58,9 +95,16 @@ var showResult = function (text, outcome) {
   replayAnimation(els.result, 'pop');
 };
 
-var updateStreak = function (outcome) {
+var updateStats = function (outcome) {
+  state.outcomes.push(outcome);
   state.streak = outcome === 'win' ? state.streak + 1 : 0;
-  els.streak.innerHTML = state.streak >= 2 ? '🔥 ' + state.streak + ' win streak' : '&nbsp;';
+
+  var rounds = state.outcomes.length;
+  els.streak.textContent = state.streak;
+  els.roundCount.textContent = rounds;
+  els.winRate.textContent = Math.round((state.wins / rounds) * 100) + '%';
+
+  renderChart();
 };
 
 var reveal = function (myChoice, botChoice) {
@@ -72,23 +116,23 @@ var reveal = function (myChoice, botChoice) {
   var outcome;
   if (myChoice === botChoice) {
     outcome = 'draw';
+    state.draws++;
     showResult("It's a draw", outcome);
   } else if (beats[myChoice] === botChoice) {
     outcome = 'win';
-    showResult('You won! 🎉', outcome);
-    state.you++;
-    els.myScore.textContent = state.you;
+    state.wins++;
+    showResult('You won this round', outcome);
+    els.myScore.textContent = state.wins;
     replayAnimation(els.myScore, 'bump');
   } else {
     outcome = 'lose';
-    showResult('Bot wins 🤖', outcome);
-    state.bot++;
-    els.botScore.textContent = state.bot;
+    state.losses++;
+    showResult('The bot takes it', outcome);
+    els.botScore.textContent = state.losses;
     replayAnimation(els.botScore, 'bump');
   }
 
-  updateStreak(outcome);
-  addHistoryDot(outcome);
+  updateStats(outcome);
   state.locked = false;
   setButtonsDisabled(false);
 };

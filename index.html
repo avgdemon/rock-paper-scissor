@@ -9,64 +9,97 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div class="aurora" aria-hidden="true">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-  <div class="grain" aria-hidden="true"></div>
-
   <main id="app">
-    <header class="top">
-      <p class="kicker">The classic, remastered</p>
-      <h1>RPS&nbsp;<span class="outline">ARENA</span></h1>
-    </header>
+    <div class="bento">
 
-    <section class="arena" aria-live="polite">
-      <div class="fighter you">
-        <div class="hand" id="myHand">✊</div>
-        <div class="tag">
-          <span class="tag-name">You</span>
-          <span class="tag-score" id="myScore">0</span>
+      <article class="card hero">
+        <div class="hero-glow" aria-hidden="true">
+          <i class="g g1"></i><i class="g g2"></i><i class="g g3"></i>
         </div>
-      </div>
-
-      <div class="center">
-        <div class="result-badge" id="result">Ready?</div>
-        <div class="streak" id="streak">&nbsp;</div>
-      </div>
-
-      <div class="fighter bot">
-        <div class="hand" id="botHand">✊</div>
-        <div class="tag">
-          <span class="tag-name">Bot</span>
-          <span class="tag-score" id="botScore">0</span>
+        <header>
+          <h1>Rock, Paper, Scissors.</h1>
+          <p class="sub">A steam-powered bot is waiting.<br>How lucky are you today?</p>
+        </header>
+        <div class="arena" aria-live="polite">
+          <div class="fighter you">
+            <div class="hand" id="myHand">✊</div>
+            <span class="fighter-label">You</span>
+          </div>
+          <div class="fighter bot">
+            <div class="hand" id="botHand">✊</div>
+            <span class="fighter-label">Bot</span>
+          </div>
+          <div class="result-badge" id="result">Ready?</div>
         </div>
-      </div>
-    </section>
+      </article>
 
-    <div class="history" id="history" aria-label="Round history"></div>
+      <article class="card stat tint-blue">
+        <div class="stat-top">
+          <span class="stat-label">Your wins</span>
+          <span class="chip chip-blue" aria-hidden="true"></span>
+        </div>
+        <div class="stat-value" id="myScore">0</div>
+      </article>
 
-    <section class="dock-wrap">
-      <div class="dock">
-        <button id="rock" aria-label="Play rock">
-          <span class="emoji">✊</span>
-          <span class="label">Rock</span>
-          <kbd>1</kbd>
-        </button>
-        <button id="paper" aria-label="Play paper">
-          <span class="emoji">✋</span>
-          <span class="label">Paper</span>
-          <kbd>2</kbd>
-        </button>
-        <button id="scissors" aria-label="Play scissors">
-          <span class="emoji">✌️</span>
-          <span class="label">Scissors</span>
-          <kbd>3</kbd>
-        </button>
-      </div>
-      <p class="hint">Click a hand — or press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></p>
-    </section>
+      <article class="card stat tint-magenta">
+        <div class="stat-top">
+          <span class="stat-label">Bot wins</span>
+          <span class="chip chip-magenta" aria-hidden="true"></span>
+        </div>
+        <div class="stat-value" id="botScore">0</div>
+      </article>
+
+      <article class="card stat">
+        <div class="stat-top">
+          <span class="stat-label">Win streak</span>
+        </div>
+        <div class="stat-value" id="streak">0</div>
+      </article>
+
+      <article class="card stat">
+        <div class="stat-top">
+          <span class="stat-label">Win rate</span>
+        </div>
+        <div class="stat-value"><span id="winRate">—</span></div>
+      </article>
+
+      <article class="card history-card tint-both">
+        <div class="card-head">
+          <h2>Round history</h2>
+          <span class="head-meta"><b id="roundCount">0</b> rounds</span>
+        </div>
+        <div class="chart" id="history">
+          <p class="chart-empty" id="chartEmpty">Play a round — every result lands here. Taller columns mean longer runs.</p>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><i class="dot dot-win"></i>Win</span>
+          <span class="legend-item"><i class="dot dot-lose"></i>Loss</span>
+          <span class="legend-item"><i class="dot dot-draw"></i>Draw</span>
+        </div>
+      </article>
+
+      <article class="card play-card">
+        <div class="card-head">
+          <h2>Choose your weapon</h2>
+          <span class="head-meta">keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></span>
+        </div>
+        <div class="dock">
+          <button id="rock" aria-label="Play rock">
+            <span class="emoji">✊</span>
+            <span class="label">Rock</span>
+          </button>
+          <button id="paper" aria-label="Play paper">
+            <span class="emoji">✋</span>
+            <span class="label">Paper</span>
+          </button>
+          <button id="scissors" aria-label="Play scissors">
+            <span class="emoji">✌️</span>
+            <span class="label">Scissors</span>
+          </button>
+        </div>
+      </article>
+
+    </div>
   </main>
 
   <script type="text/javascript" src="script.js"></script>
